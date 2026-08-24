@@ -26,11 +26,11 @@
         <span>GAVEL-TD3</span>
       </a>
       <div class="nav-links">
-        <a href="#abstract">Abstract</a>
+        <a href="#video">Video</a>
         <a href="#method">Method</a>
+        <a href="#abstract">Abstract</a>
         <a href="#results">Results</a>
         <a href="#real-world">Real World</a>
-        <a href="#video">Video</a>
         <a href="#citation">Citation</a>
       </div>
     </div>
@@ -78,7 +78,31 @@
   </header>
 
   <main id="main-content">
-    <section class="overview-section" aria-label="Framework overview">
+    <section class="section-band hero-video-band" id="video">
+      <div class="shell">
+        <div class="section-heading centered video-section-heading">
+          <p class="section-label">Video</p>
+          <h2>Real-world navigation demonstration</h2>
+          <p>Deployment results across structured, unstructured, random-obstacle, and moving-pedestrian scenarios.</p>
+        </div>
+        <article class="video-card hero-video-card">
+          <div class="video-heading">
+            <div>
+              <p class="section-label">Supplementary Video</p>
+              <h3>From simulation to physical navigation</h3>
+            </div>
+            <a href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+          </div>
+          <video controls preload="metadata" playsinline poster="assets/real-world-web.webp">
+            <source src="assets/gavel-realworld-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video.
+          </video>
+          <p>The learned policy is deployed on a mobile robot using only onboard observations and goal-relative state.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="overview-section" id="method" aria-label="Framework overview">
       <div class="shell">
         <figure class="paper-figure overview-figure">
           <a href="assets/framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution GAVEL-TD3 framework figure">
@@ -123,46 +147,33 @@
       </div>
     </section>
 
-    <section class="section-band method-band" id="method">
-      <div class="shell">
-        <div class="section-heading centered">
-          <p class="section-label">Method</p>
-          <h2>Structured perception and value guidance inside TD3</h2>
-          <p>The framework transforms raw local observations into a relational state and uses APF reference actions only where they are most useful: during early value learning.</p>
-        </div>
-
-        <div class="method-flow">
-          <article>
-            <div class="method-number">01</div>
-            <div>
-              <h3>Build Graph + GAT</h3>
-              <p>Sectorized LiDAR measurements become directed graph nodes, enabling attention layers to encode local obstacle geometry and spatial dependencies.</p>
-            </div>
-          </article>
-          <article>
-            <div class="method-number">02</div>
-            <div>
-              <h3>PCR State Readout</h3>
-              <p>Pooling and concatenation retain the learned environment representation together with goal and robot-motion information.</p>
-            </div>
-          </article>
-          <article>
-            <div class="method-number">03</div>
-            <div>
-              <h3>APF-guided TD3</h3>
-              <p>Reference velocities supervise an auxiliary critic in training; at deployment, the actor directly outputs continuous linear and angular velocities.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section-band results-band" id="results">
       <div class="shell shell-wide">
         <div class="section-heading centered">
-          <p class="section-label">Simulation &amp; Zero-shot Evaluation</p>
-          <h2>Generalization beyond the training environments</h2>
+          <p class="section-label">Training &amp; Zero-shot Evaluation</p>
+          <h2>Training dynamics and generalization</h2>
           <p>GAVEL-TD3 converges quickly in simulation and transfers directly to unseen BARN layouts, maintaining robust navigation in dense obstacle fields.</p>
+        </div>
+
+        <div class="training-figures" aria-label="Training curves">
+          <figure class="paper-figure training-figure">
+            <a href="assets/training-static.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution static-environment training curves">
+              <img src="assets/training-static-web.webp" width="2200" height="596" alt="Success rate, reward, and episode steps during training in the static random-obstacle environment." loading="lazy">
+            </a>
+            <figcaption><strong>Static random obstacles.</strong> Mean training curves over five random seeds; shaded regions denote standard deviation.</figcaption>
+          </figure>
+          <figure class="paper-figure training-figure">
+            <a href="assets/training-dynamic.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution dynamic-environment training curves">
+              <img src="assets/training-dynamic-web.webp" width="2200" height="596" alt="Success rate, reward, and episode steps during training with dynamic pedestrian interference." loading="lazy">
+            </a>
+            <figcaption><strong>Dynamic pedestrian interference.</strong> GAVEL-TD3 achieves the fastest improvement and the strongest final performance.</figcaption>
+          </figure>
+        </div>
+
+        <div class="results-subheading">
+          <p class="section-label">BARN Benchmark</p>
+          <h3>Decision efficiency and reliability on unseen maps</h3>
+          <p>Quantitative evaluation across 50 unseen BARN episodes reveals fewer planning steps and the lowest overall failure rate.</p>
         </div>
 
         <div class="metric-strip" aria-label="Key simulation results">
@@ -182,18 +193,25 @@
 
         <div class="results-grid">
           <figure class="paper-figure result-figure">
-            <a class="result-media" href="assets/barn-results.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution BARN environment figure">
-              <img src="assets/barn-results-web.webp" width="1400" height="1383" alt="Representative top-down BARN navigation environment with static obstacles and pedestrians.">
+            <a class="result-media evidence-media" href="assets/barn-planning-steps.png" target="_blank" rel="noreferrer" aria-label="Open the full-resolution BARN planning-step figure">
+              <img src="assets/barn-planning-steps-web.webp" width="1800" height="1040" alt="Planning steps for successful BARN episodes across GAVEL-TD3 and baseline algorithms." loading="lazy">
             </a>
-            <figcaption><strong>Unseen environments.</strong> Representative BARN layouts used for zero-shot evaluation.</figcaption>
+            <figcaption><strong>Planning efficiency.</strong> GAVEL-TD3 consistently reaches the goal with fewer decision steps.</figcaption>
           </figure>
           <figure class="paper-figure result-figure">
-            <a class="result-media" href="assets/trajectories.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution trajectory comparison figure">
-              <img src="assets/trajectories-web.webp" width="1800" height="2790" alt="Six qualitative trajectory comparisons in a dense obstacle map, with collision cases annotated.">
+            <a class="result-media evidence-media" href="assets/barn-failure-rates.png" target="_blank" rel="noreferrer" aria-label="Open the full-resolution BARN failure-rate figure">
+              <img src="assets/barn-failure-rates-web.webp" width="1800" height="988" alt="Collision and timeout rates across GAVEL-TD3 and six baseline navigation algorithms." loading="lazy">
             </a>
-            <figcaption><strong>Trajectory comparison.</strong> Qualitative paths in a dense obstacle map; collision cases are annotated in the paper figure.</figcaption>
+            <figcaption><strong>Failure analysis.</strong> GAVEL-TD3 records the lowest collision rate and no timeout failures.</figcaption>
           </figure>
         </div>
+
+        <figure class="paper-figure trajectory-figure">
+          <a class="trajectory-media" href="assets/trajectories.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution trajectory comparison figure">
+            <img src="assets/trajectories-web.webp" width="1800" height="2790" alt="Six qualitative trajectory comparisons in a dense obstacle map, with collision cases annotated." loading="lazy">
+          </a>
+          <figcaption><strong>Trajectory-level comparison.</strong> Only GAVEL-TD3 completes the dense BARN scenario without collision in the representative runs.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -307,40 +325,6 @@
           <p class="table-note">Each algorithm was evaluated in five trials per scenario. Success rate is reported as successful trials out of five; time and path length are calculated only over successful trials, with the value after the slash denoting the standard deviation.</p>
         </div>
 
-        <div class="deployment-grid">
-          <article class="platform-card">
-            <div class="platform-copy">
-              <p class="section-label">Robot Platform</p>
-              <h3>Onboard sensing and policy execution</h3>
-              <p>The trained actor receives local LiDAR observations and goal-relative state, then directly outputs continuous linear and angular velocity commands.</p>
-              <ul>
-                <li>Onboard 3D LiDAR perception</li>
-                <li>No prior map at deployment</li>
-                <li>Zero-shot policy transfer</li>
-              </ul>
-            </div>
-            <figure>
-              <a href="assets/robot-platform.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution mobile robot platform figure">
-                <img src="assets/robot-platform.png" width="1374" height="620" alt="Annotated mobile robot platform used for real-world deployment.">
-              </a>
-            </figure>
-          </article>
-
-          <article class="video-card" id="video">
-            <div class="video-heading">
-              <div>
-                <p class="section-label">Video</p>
-                <h3>Real-world navigation demonstration</h3>
-              </div>
-              <a href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
-            </div>
-            <video controls preload="metadata" playsinline poster="assets/real-world-web.webp">
-              <source src="assets/gavel-realworld-demo.mp4" type="video/mp4">
-              Your browser does not support embedded video.
-            </video>
-            <p>Supplementary demonstration covering structured, unstructured, random-obstacle, and moving-pedestrian scenarios.</p>
-          </article>
-        </div>
       </div>
     </section>
 

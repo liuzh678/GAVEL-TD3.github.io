@@ -451,6 +451,22 @@ sup {
 .route-motif-left { left: 2vw; top: 34%; }
 .route-motif-right { right: -50px; bottom: 4%; transform: rotate(180deg); }
 
+.hero-video-band {
+  padding-top: clamp(42px, 5vw, 66px);
+  padding-bottom: clamp(86px, 9vw, 124px);
+  background:
+    radial-gradient(circle at 50% 100%, rgba(35, 109, 155, 0.08), transparent 38%),
+    #fff;
+}
+
+.video-section-heading { margin-bottom: 26px; }
+
+.hero-video-card {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 32px);
+}
+
 .overview-section {
   position: relative;
   z-index: 3;
@@ -671,6 +687,41 @@ sup {
     var(--canvas);
 }
 
+.training-figures {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.training-figure > a {
+  padding: clamp(8px, 1.4vw, 16px);
+}
+
+.training-figure img {
+  border-radius: calc(var(--radius-md) - 4px);
+}
+
+.results-subheading {
+  max-width: 760px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.results-subheading h3 {
+  margin: 10px 0 11px;
+  color: var(--ink);
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(27px, 3.2vw, 39px);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.results-subheading > p:not(.section-label) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .metric-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -732,6 +783,30 @@ sup {
 .result-media img {
   width: 100%;
   max-height: 620px;
+  object-fit: contain;
+}
+
+.evidence-media {
+  min-height: 430px;
+  padding: 18px;
+}
+
+.evidence-media img { max-height: 400px; }
+
+.trajectory-figure { margin-top: 24px; }
+
+.trajectory-media {
+  display: flex !important;
+  min-height: 720px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.trajectory-media img {
+  width: auto;
+  max-width: 100%;
+  max-height: 960px;
   object-fit: contain;
 }
 
@@ -1136,6 +1211,8 @@ tbody tr:last-child td { border-bottom: 0; }
   .results-grid { grid-template-columns: 1fr; }
   .result-media { min-height: 520px; }
   .result-media img { max-height: 560px; }
+  .evidence-media { min-height: 480px; }
+  .trajectory-media { min-height: 640px; }
 
   .platform-card {
     display: grid;
@@ -1231,6 +1308,12 @@ tbody tr:last-child td { border-bottom: 0; }
   }
 
   .result-media img { max-height: 620px; }
+  .training-figures { gap: 18px; margin-bottom: 52px; }
+  .training-figure > a { padding: 5px; }
+  .results-subheading { margin-bottom: 24px; }
+  .evidence-media { min-height: auto; }
+  .trajectory-media { min-height: auto; padding: 10px; }
+  .trajectory-media img { width: 100%; max-height: none; }
   .real-world-figure > a { padding: 5px; }
   .real-summary { gap: 1px; }
   .real-summary > div { padding: 18px 14px; }
