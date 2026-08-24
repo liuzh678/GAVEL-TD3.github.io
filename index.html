@@ -1,12 +1,447 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><meta name="description" content="GAVEL-TD3: mapless mobile robot navigation with graph attention and artificial potential field guidance."><title>GAVEL-TD3 | Mapless Mobile Robot Navigation</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="layout-fix.css"></head><body>
-<nav class="site-nav"><a class="brand" href="#top">GAVEL-TD3</a><div class="nav-links"><a href="#video">Video</a><a href="#abstract">Abstract</a><a href="#method">Method</a><a href="#results">Results</a><a href="#real-world">Real World</a><a href="#citation">Citation</a></div></nav>
-<header class="paper-hero" id="top"><div class="hero-content"><p class="venue-label">Engineering Applications of Artificial Intelligence · Project Page</p><h1>A Deep Reinforcement Learning Framework for Mapless Navigation of Mobile Robots Incorporating Graph Attention Network and Artificial Potential Field</h1><p class="hero-subtitle">GAVEL-TD3 combines graph-attention state representation with artificial-potential-field-guided value learning for safe, efficient mapless navigation in complex environments.</p><p class="author-line">Ziheng Liu<sup>1,#</sup> · Zhixiong Zhang<sup>1,#</sup> · Jun Fu<sup>1,2,*</sup> · You Wang<sup>3,4</sup></p><p class="affiliation-line"><sup>1</sup>Zhejiang Gongshang University · <sup>2</sup>Key Laboratory of Electronic Business and Logistics Information Technology of Zhejiang Province · <sup>3</sup>Luoteng Technology · <sup>4</sup>Zhejiang University</p><div class="hero-actions"><a class="action-button primary" href="#method">Method</a><span class="action-button muted" aria-disabled="true">Code · Coming Soon</span><a class="action-button" href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Video</a></div></div></header>
-<main>
-<section class="overview-section"><div class="section-inner"><figure class="paper-figure overview-figure"><a href="#method"><img src="assets/framework.jpg" alt="GAVEL-TD3 framework overview."></a><figcaption>GAVEL-TD3 integrates graph-attention state representation with APF-guided value learning for mapless mobile robot navigation.</figcaption></figure></div></section>
-<section class="section-band video-band" id="video"><div class="section-inner"><div class="section-heading centered"><p class="eyebrow">Video</p><h2>Real-world navigation demonstration</h2><p>A complete outdoor demonstration of GAVEL-TD3 navigating structured, unstructured, random, and dynamic scenarios.</p></div><figure class="featured-video"><video controls preload="metadata" poster="assets/real-world.jpg"><source src="assets/gavel-realworld-demo.mp4" type="video/mp4">Your browser does not support embedded video.</video><figcaption>GAVEL-TD3 real-world supplementary video.</figcaption></figure></div></section>
-<section class="section-band" id="abstract"><div class="section-inner narrow"><div class="section-heading centered"><p class="eyebrow">Abstract</p><h2>Learning to navigate from partial local observations</h2></div><div class="abstract-copy"><p>Deep reinforcement learning can enable end-to-end mobile robot navigation without prior maps, but local LiDAR observations provide incomplete and noisy scene information, while early exploration can be slow and unsafe. GAVEL-TD3 addresses these two limitations in a unified mapless navigation framework.</p><p>First, the LiDAR scan is represented as a graph and processed with graph attention networks to capture spatial dependencies between obstacles. Second, an artificial potential field supplies reference actions to an auxiliary critic during early training, accelerating convergence without constraining the final learned policy. Both components are integrated into Twin Delayed Deep Deterministic Policy Gradient.</p></div><div class="contribution-block"><h3>Contributions</h3><ol><li>Graph-attention state representation using only local LiDAR observations, without global state or object tracking.</li><li>APF-guided auxiliary value learning that accelerates early policy convergence while retaining later exploration.</li><li>Extensive simulation, zero-shot BARN, and real-world evaluation demonstrating robust generalization.</li></ol></div></div></section>
-<section class="section-band figure-band" id="method"><div class="section-inner"><div class="section-heading"><p class="eyebrow">Method</p><h2>Structured perception and value guidance inside TD3</h2><p>GAVEL-TD3 turns sectorized LiDAR observations into a directed graph, derives an attention-based state representation, and learns continuous velocity commands with APF-guided value learning.</p></div><figure class="paper-figure wide"><a href="assets/framework.jpg" target="_blank"><img src="assets/framework.jpg" alt="GAVEL-TD3 framework overview."></a><figcaption>Framework overview. Graph attention and PCR form the state representation, while APF provides reference velocities to guide early value learning.</figcaption></figure><div class="pipeline-grid"><article><span>01</span><h3>Build Graph + GAT</h3><p>LiDAR sectors become graph nodes, allowing the network to learn relational obstacle geometry from local measurements.</p></article><article><span>02</span><h3>PCR State Readout</h3><p>Pooling and concatenation preserve the environment representation together with goal and robot-motion information.</p></article><article><span>03</span><h3>APF-guided TD3</h3><p>Reference velocities guide an auxiliary critic during training, while the learned actor produces control actions at deployment.</p></article></div></div></section>
-<section class="section-band tint-band" id="results"><div class="section-inner"><div class="section-heading centered"><p class="eyebrow">Simulation & Zero-shot Evaluation</p><h2>Strong generalization on unseen navigation scenarios</h2><p>On BARN, GAVEL-TD3 reaches a 0.88 success rate—38 percentage points above TD3—while maintaining efficient and stable decision making.</p></div><div class="metric-strip"><div><span class="metric">0.88</span><span class="metric-label">BARN success rate</span></div><div><span class="metric">+38 pp</span><span class="metric-label">over TD3 on BARN</span></div><div><span class="metric">~200k</span><span class="metric-label">interaction steps to converge</span></div></div><div class="results-layout"><figure class="paper-figure"><a href="assets/barn-results.jpg" target="_blank"><img src="assets/barn-results.jpg" alt="BARN benchmark results."></a><figcaption>Performance comparison on BARN unseen environments.</figcaption></figure><figure class="paper-figure"><a href="assets/trajectories.jpg" target="_blank"><img src="assets/trajectories.jpg" alt="Trajectory comparison in dense obstacles."></a><figcaption>GAVEL-TD3 produces smooth, collision-free trajectories in dense obstacle fields.</figcaption></figure></div></div></section>
-<section class="section-band" id="real-world"><div class="section-inner"><div class="section-heading"><p class="eyebrow">Real-world Deployment</p><h2>From simulated scenes to physical navigation</h2><p>The learned policy is deployed on a mobile robot with onboard 3D LiDAR. No prior map or parameter tuning is used in the outdoor experiments.</p></div><figure class="paper-figure wide"><a href="assets/real-world.jpg" target="_blank"><img src="assets/real-world.jpg" alt="GAVEL-TD3 real-world experiment scenarios and trajectories."></a><figcaption>Structured obstacles, unstructured obstacles, random obstacle changes, and moving pedestrians.</figcaption></figure><div class="real-grid"><figure class="paper-figure"><a href="assets/robot-platform.jpg" target="_blank"><img src="assets/robot-platform.jpg" alt="Mobile robot platform."></a><figcaption>Mobile robot platform used for real-world deployment.</figcaption></figure><div class="real-copy"><h3>16 / 20 successful trials</h3><p>GAVEL-TD3 outperforms TD3 across all four scenarios: 5/5 versus 3/5 in structured obstacles, 4/5 versus 2/5 among irregular chairs, 4/5 versus 1/5 under random changes, and 3/5 versus 1/5 with moving pedestrians.</p><p>Across successful runs, it also reaches the goal faster while preserving comparable path lengths.</p></div></div></div></section>
-<section class="section-band tint-band" id="citation"><div class="section-inner narrow"><div class="section-heading centered"><p class="eyebrow">Citation</p><h2>Cite GAVEL-TD3</h2></div><div class="bibtex-block"><button class="copy-button" data-copy="bibtex">Copy BibTeX</button><pre id="bibtex">@article{liu2026gaveltD3,&#10;  title={A Deep Reinforcement Learning Framework for Mapless Navigation of Mobile Robots Incorporating Graph Attention Network and Artificial Potential Field},&#10;  author={Liu, Ziheng and Zhang, Zhixiong and Fu, Jun and Wang, You},&#10;  journal={Engineering Applications of Artificial Intelligence},&#10;  year={2026}&#10;}</pre></div></div></section>
-</main><footer class="site-footer"><span>GAVEL-TD3</span><span>Mapless mobile robot navigation with graph attention and APF-guided value learning</span></footer><script>document.querySelector('[data-copy]').addEventListener('click',async()=>{await navigator.clipboard.writeText(document.getElementById('bibtex').innerText);document.querySelector('[data-copy]').textContent='Copied';setTimeout(()=>document.querySelector('[data-copy]').textContent='Copy BibTeX',1500)});</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GAVEL-TD3: robust mapless navigation of mobile robots via graph attention and artificial potential field guidance.">
+  <meta name="theme-color" content="#f7fafb">
+  <meta property="og:title" content="GAVEL-TD3 | Robust Mapless Navigation">
+  <meta property="og:description" content="Graph-attention state representation and APF-guided value learning for robust mobile robot navigation.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/real-world-web.webp">
+  <link rel="icon" href="data:,">
+  <title>GAVEL-TD3 | Robust Mapless Navigation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="wordmark" href="#top" aria-label="GAVEL-TD3 home">
+        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>GAVEL-TD3</span>
+      </a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#real-world">Real World</a>
+        <a href="#video">Video</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="paper-hero" id="top">
+    <div class="route-motif route-motif-left" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="route-motif route-motif-right" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="hero-inner">
+      <p class="venue-label">Engineering Applications of Artificial Intelligence · Project Page</p>
+      <h1><span>GAVEL-TD3:</span> Robust mapless navigation of mobile robots via fusion of graph attention networks and artificial potential field</h1>
+      <p class="hero-subtitle">A graph-aware reinforcement learning framework that combines relational LiDAR representation with artificial-potential-field-guided value learning for safe and efficient mapless navigation.</p>
+
+      <p class="author-line">
+        <span>Ziheng Liu<sup>1,#</sup></span>
+        <span>Zhixiong Zhang<sup>1,#</sup></span>
+        <span>Jun Fu<sup>1,2,*</sup></span>
+        <span>You Wang<sup>3,4</sup></span>
+      </p>
+      <p class="affiliation-line"><sup>1</sup>Zhejiang Gongshang University · <sup>2</sup>Key Laboratory of Electronic Business and Logistics Information Technology of Zhejiang Province · <sup>3</sup>Luoteng Technology · <sup>4</sup>Zhejiang University</p>
+      <p class="author-note"><sup>#</sup>Equal contribution · <sup>*</sup>Corresponding author</p>
+
+      <div class="hero-actions" aria-label="Project resources">
+        <a class="action-button primary" href="https://www.sciencedirect.com/science/article/abs/pii/S0952197626023602" target="_blank" rel="noreferrer">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2.75h8.2L18.5 7v14.25H6zM14 3v4h4M9 12h6M9 16h6"/></svg>
+          <span>Paper</span>
+        </a>
+        <a class="action-button" href="#video">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8.5 6.5v11l9-5.5z"/></svg>
+          <span>Video</span>
+        </a>
+        <span class="action-button muted" aria-disabled="true">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 8-4 4 4 4M15 8l4 4-4 4M13 5l-2 14"/></svg>
+          <span>Code · Coming Soon</span>
+        </span>
+      </div>
+
+      <div class="publication-line" aria-label="Publication details">
+        <span>Volume 182</span>
+        <span>Article 116076</span>
+        <span>October 2026</span>
+        <a href="https://doi.org/10.1016/j.engappai.2026.116076" target="_blank" rel="noreferrer">DOI 10.1016/j.engappai.2026.116076</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="overview-section" aria-label="Framework overview">
+      <div class="shell">
+        <figure class="paper-figure overview-figure">
+          <a href="assets/framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution GAVEL-TD3 framework figure">
+            <img src="assets/framework-web.webp" width="2000" height="1398" alt="GAVEL-TD3 framework with graph attention, PCR state readout, APF guidance, replay buffer, critic, and policy." fetchpriority="high">
+          </a>
+          <figcaption><strong>Framework overview.</strong> GAVEL-TD3 couples graph-attention state representation with APF-guided value learning inside TD3.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-band abstract-band" id="abstract">
+      <div class="shell">
+        <div class="abstract-layout">
+          <div class="section-heading">
+            <p class="section-label">Abstract</p>
+            <h2>Relational perception with guided exploration</h2>
+            <p>GAVEL-TD3 addresses two practical limitations of end-to-end mapless navigation: incomplete local observations and inefficient early exploration.</p>
+          </div>
+          <div class="abstract-card">
+            <p>Deep reinforcement learning can enable mobile robots to navigate without prior maps, but local LiDAR measurements are partial and noisy, and unconstrained exploration may converge slowly. GAVEL-TD3 represents sectorized LiDAR scans as a graph and uses graph attention networks to capture spatial relationships between obstacles.</p>
+            <p>An artificial potential field generates reference actions for an auxiliary critic during early training. This guidance accelerates policy learning without constraining the final actor at deployment, and the complete framework is integrated into Twin Delayed Deep Deterministic Policy Gradient.</p>
+          </div>
+        </div>
+
+        <div class="contribution-grid" aria-label="Main contributions">
+          <article class="contribution-card">
+            <span class="card-index">01</span>
+            <h3>Graph-aware state representation</h3>
+            <p>Model local LiDAR sectors as graph nodes and learn obstacle relationships with graph attention, using only onboard observations.</p>
+          </article>
+          <article class="contribution-card">
+            <span class="card-index">02</span>
+            <h3>APF-guided value learning</h3>
+            <p>Inject safe motion priors through an auxiliary critic during early training while preserving the learned actor’s autonomy.</p>
+          </article>
+          <article class="contribution-card">
+            <span class="card-index">03</span>
+            <h3>Simulation-to-real validation</h3>
+            <p>Evaluate in simulation, unseen BARN environments, and four real-world scenarios without environment-specific retuning.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band method-band" id="method">
+      <div class="shell">
+        <div class="section-heading centered">
+          <p class="section-label">Method</p>
+          <h2>Structured perception and value guidance inside TD3</h2>
+          <p>The framework transforms raw local observations into a relational state and uses APF reference actions only where they are most useful: during early value learning.</p>
+        </div>
+
+        <div class="method-flow">
+          <article>
+            <div class="method-number">01</div>
+            <div>
+              <h3>Build Graph + GAT</h3>
+              <p>Sectorized LiDAR measurements become directed graph nodes, enabling attention layers to encode local obstacle geometry and spatial dependencies.</p>
+            </div>
+          </article>
+          <article>
+            <div class="method-number">02</div>
+            <div>
+              <h3>PCR State Readout</h3>
+              <p>Pooling and concatenation retain the learned environment representation together with goal and robot-motion information.</p>
+            </div>
+          </article>
+          <article>
+            <div class="method-number">03</div>
+            <div>
+              <h3>APF-guided TD3</h3>
+              <p>Reference velocities supervise an auxiliary critic in training; at deployment, the actor directly outputs continuous linear and angular velocities.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band results-band" id="results">
+      <div class="shell shell-wide">
+        <div class="section-heading centered">
+          <p class="section-label">Simulation &amp; Zero-shot Evaluation</p>
+          <h2>Generalization beyond the training environments</h2>
+          <p>GAVEL-TD3 converges quickly in simulation and transfers directly to unseen BARN layouts, maintaining robust navigation in dense obstacle fields.</p>
+        </div>
+
+        <div class="metric-strip" aria-label="Key simulation results">
+          <div class="metric-card">
+            <span class="metric">0.88</span>
+            <span class="metric-label">BARN success rate</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric">+38 pp</span>
+            <span class="metric-label">over TD3 on BARN</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric">≈200k</span>
+            <span class="metric-label">interaction steps to converge</span>
+          </div>
+        </div>
+
+        <div class="results-grid">
+          <figure class="paper-figure result-figure">
+            <a class="result-media" href="assets/barn-results.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution BARN environment figure">
+              <img src="assets/barn-results-web.webp" width="1400" height="1383" loading="lazy" alt="Representative top-down BARN navigation environment with static obstacles and pedestrians.">
+            </a>
+            <figcaption><strong>Unseen environments.</strong> Representative BARN layouts used for zero-shot evaluation.</figcaption>
+          </figure>
+          <figure class="paper-figure result-figure">
+            <a class="result-media" href="assets/trajectories.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution trajectory comparison figure">
+              <img src="assets/trajectories-web.webp" width="1800" height="2790" loading="lazy" alt="Six qualitative trajectory comparisons in a dense obstacle map, with collision cases annotated.">
+            </a>
+            <figcaption><strong>Trajectory comparison.</strong> Qualitative paths in a dense obstacle map; collision cases are annotated in the paper figure.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band real-world-band" id="real-world">
+      <div class="shell shell-wide">
+        <div class="section-heading">
+          <p class="section-label">Real-world Deployment</p>
+          <h2>From simulation to physical navigation</h2>
+          <p>The policy is deployed on a mobile robot with onboard 3D LiDAR. The outdoor experiments use no prior map and no environment-specific parameter tuning.</p>
+        </div>
+
+        <figure class="paper-figure real-world-figure">
+          <a href="assets/real-world.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution real-world experiment figure">
+            <img src="assets/real-world-web.webp" width="2000" height="1177" loading="lazy" alt="GAVEL-TD3 real-world experiments in structured, unstructured, random-obstacle, and moving-pedestrian scenarios.">
+          </a>
+          <figcaption><strong>Four deployment settings.</strong> Structured obstacles, unstructured obstacles, unexpected obstacle changes, and moving pedestrians.</figcaption>
+        </figure>
+
+        <div class="real-summary" aria-label="Overall real-world results">
+          <div>
+            <span class="summary-value">16 / 20</span>
+            <span class="summary-label">GAVEL-TD3 successful trials</span>
+          </div>
+          <div>
+            <span class="summary-value">7 / 20</span>
+            <span class="summary-label">TD3 successful trials</span>
+          </div>
+          <div>
+            <span class="summary-value">4</span>
+            <span class="summary-label">real-world scenarios</span>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-heading">
+            <div>
+              <p class="section-label">Quantitative Results</p>
+              <h3>Real-world performance across four scenarios</h3>
+            </div>
+            <p>Mean / standard deviation over successful trials</p>
+          </div>
+          <p class="table-swipe">Swipe horizontally to view time and path-length statistics →</p>
+          <div class="table-scroll" tabindex="0" aria-label="Scrollable real-world experiment results table">
+            <table>
+              <caption class="sr-only">Real-world quantitative results across four scenarios.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Scenario</th>
+                  <th scope="col">Algorithm</th>
+                  <th scope="col">Success rate</th>
+                  <th scope="col">Avg. time (s) / Std</th>
+                  <th scope="col">Avg. length (m) / Std</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gavel-row">
+                  <th scope="rowgroup" rowspan="2">Structured obstacles</th>
+                  <th scope="row">GAVEL-TD3</th>
+                  <td><strong>5 / 5</strong></td>
+                  <td><strong>42.16 / 0.56</strong></td>
+                  <td><strong>18.40 / 0.41</strong></td>
+                </tr>
+                <tr>
+                  <th scope="row">TD3</th>
+                  <td>3 / 5</td>
+                  <td>52.73 / 1.44</td>
+                  <td>18.49 / 0.20</td>
+                </tr>
+                <tr class="gavel-row">
+                  <th scope="rowgroup" rowspan="2">Unstructured obstacles</th>
+                  <th scope="row">GAVEL-TD3</th>
+                  <td><strong>4 / 5</strong></td>
+                  <td><strong>82.80 / 3.38</strong></td>
+                  <td><strong>16.41 / 0.20</strong></td>
+                </tr>
+                <tr>
+                  <th scope="row">TD3</th>
+                  <td>2 / 5</td>
+                  <td>99.65 / 6.44</td>
+                  <td>16.52 / 0.03</td>
+                </tr>
+                <tr class="gavel-row">
+                  <th scope="rowgroup" rowspan="2">Random obstacles</th>
+                  <th scope="row">GAVEL-TD3</th>
+                  <td><strong>4 / 5</strong></td>
+                  <td><strong>153.60 / 4.83</strong></td>
+                  <td><strong>48.27 / 0.72</strong></td>
+                </tr>
+                <tr>
+                  <th scope="row">TD3</th>
+                  <td>1 / 5</td>
+                  <td>179.27 / 0.00</td>
+                  <td>48.46 / 0.00</td>
+                </tr>
+                <tr class="gavel-row">
+                  <th scope="rowgroup" rowspan="2">Moving pedestrians</th>
+                  <th scope="row">GAVEL-TD3</th>
+                  <td><strong>3 / 5</strong></td>
+                  <td><strong>44.00 / 5.11</strong></td>
+                  <td><strong>13.46 / 0.33</strong></td>
+                </tr>
+                <tr>
+                  <th scope="row">TD3</th>
+                  <td>1 / 5</td>
+                  <td>53.10 / 0</td>
+                  <td>13.59 / 0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">Each algorithm was evaluated in five trials per scenario. Success rate is reported as successful trials out of five; time and path length are calculated only over successful trials, with the value after the slash denoting the standard deviation.</p>
+        </div>
+
+        <div class="deployment-grid">
+          <article class="platform-card">
+            <div class="platform-copy">
+              <p class="section-label">Robot Platform</p>
+              <h3>Onboard sensing and policy execution</h3>
+              <p>The trained actor receives local LiDAR observations and goal-relative state, then directly outputs continuous linear and angular velocity commands.</p>
+              <ul>
+                <li>Onboard 3D LiDAR perception</li>
+                <li>No prior map at deployment</li>
+                <li>Zero-shot policy transfer</li>
+              </ul>
+            </div>
+            <figure>
+              <a href="assets/robot-platform.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution mobile robot platform figure">
+                <img src="assets/robot-platform.png" width="1374" height="620" loading="lazy" alt="Annotated mobile robot platform used for real-world deployment.">
+              </a>
+            </figure>
+          </article>
+
+          <article class="video-card" id="video">
+            <div class="video-heading">
+              <div>
+                <p class="section-label">Video</p>
+                <h3>Real-world navigation demonstration</h3>
+              </div>
+              <a href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+            </div>
+            <video controls preload="metadata" playsinline poster="assets/real-world-web.webp">
+              <source src="assets/gavel-realworld-demo.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
+            <p>Supplementary demonstration covering structured, unstructured, random-obstacle, and moving-pedestrian scenarios.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band citation-band" id="citation">
+      <div class="shell narrow-shell">
+        <div class="section-heading centered citation-heading">
+          <p class="section-label">Citation</p>
+          <h2>Cite GAVEL-TD3</h2>
+          <p>The published article is available from Engineering Applications of Artificial Intelligence.</p>
+          <div class="citation-links">
+            <a href="https://www.sciencedirect.com/science/article/abs/pii/S0952197626023602" target="_blank" rel="noreferrer">ScienceDirect ↗</a>
+            <a href="https://doi.org/10.1016/j.engappai.2026.116076" target="_blank" rel="noreferrer">DOI ↗</a>
+          </div>
+        </div>
+        <div class="bibtex-block">
+          <button class="copy-button" type="button" data-copy="bibtex">Copy BibTeX</button>
+          <pre id="bibtex">@article{Liu2026GAVELTD3,
+  title   = {GAVEL-TD3: Robust mapless navigation of mobile robots via fusion of graph attention networks and artificial potential field},
+  author  = {Liu, Ziheng and Zhang, Zhixiong and Fu, Jun and Wang, You},
+  journal = {Engineering Applications of Artificial Intelligence},
+  volume  = {182},
+  pages   = {116076},
+  year    = {2026},
+  month   = oct,
+  doi     = {10.1016/j.engappai.2026.116076},
+  url     = {https://doi.org/10.1016/j.engappai.2026.116076}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>GAVEL-TD3</span>
+      <span>Graph-aware mapless navigation with APF-guided value learning</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const nav = document.querySelector('.site-nav');
+      const copyButton = document.querySelector('[data-copy]');
+      const bibtex = document.getElementById('bibtex');
+      const navLinks = [...document.querySelectorAll('.nav-links a')];
+
+      const updateNav = () => nav.classList.toggle('is-scrolled', window.scrollY > 16);
+      updateNav();
+      window.addEventListener('scroll', updateNav, { passive: true });
+
+      const copyText = async (text) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      };
+
+      copyButton.addEventListener('click', async () => {
+        const original = copyButton.textContent;
+        try {
+          await copyText(bibtex.innerText);
+          copyButton.textContent = 'Copied';
+        } catch {
+          copyButton.textContent = 'Select & copy';
+          const selection = window.getSelection();
+          const range = document.createRange();
+          range.selectNodeContents(bibtex);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        setTimeout(() => { copyButton.textContent = original; }, 1800);
+      });
+
+      if ('IntersectionObserver' in window) {
+        const sections = navLinks
+          .map(link => document.querySelector(link.getAttribute('href')))
+          .filter(Boolean);
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          navLinks.forEach(link => {
+            const active = link.getAttribute('href') === '#' + visible.target.id;
+            link.classList.toggle('is-active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+          });
+        }, { rootMargin: '-24% 0px -62% 0px', threshold: [0, 0.2, 0.5] });
+        sections.forEach(section => observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>
