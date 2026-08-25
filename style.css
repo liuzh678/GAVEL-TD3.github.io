@@ -496,6 +496,15 @@ sup {
   padding: clamp(12px, 2vw, 26px);
 }
 
+.training-framework-figure {
+  max-width: 1080px;
+  margin: clamp(34px, 4vw, 54px) auto 0;
+}
+
+.training-framework-figure > a {
+  padding: clamp(10px, 1.8vw, 20px);
+}
+
 .paper-figure figcaption {
   margin-top: 13px;
   color: var(--muted);
@@ -1284,6 +1293,8 @@ tbody tr:last-child td { border-bottom: 0; }
   .overview-figure { margin-top: -35px; }
   .paper-figure > a { border-radius: var(--radius-md); }
   .overview-figure > a { padding: 7px; }
+  .training-framework-figure { margin-top: 30px; }
+  .training-framework-figure > a { padding: 6px; }
   .section-band { padding: 66px 0; }
   .section-heading h2 { font-size: 36px; }
   .section-heading > p:not(.section-label) { font-size: 14px; }
