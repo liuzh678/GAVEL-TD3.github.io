@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="GAVEL-TD3: robust mapless navigation of mobile robots via graph attention and artificial potential field guidance.">
-  <meta name="theme-color" content="#f7fafb">
+  <meta name="theme-color" content="#f7f8fb">
   <meta property="og:title" content="GAVEL-TD3 | Robust Mapless Navigation">
   <meta property="og:description" content="Graph-attention state representation and APF-guided value learning for robust mobile robot navigation.">
   <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
   <title>GAVEL-TD3 | Robust Mapless Navigation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,23 +22,27 @@
   <nav class="site-nav" aria-label="Primary navigation">
     <div class="nav-inner">
       <a class="wordmark" href="#top" aria-label="GAVEL-TD3 home">
-        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>GAVEL-TD3</span>
       </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation"><span></span><span></span><span></span></button>
+      <div class="nav-menu" id="nav-menu">
       <div class="nav-links">
-        <a href="#video">Video</a>
-        <a href="#method">Method</a>
         <a href="#abstract">Abstract</a>
-        <a href="#results">Results</a>
+        <a href="#method">Method</a>
+        <a href="#training">Training</a>
+        <a href="#results">BARN</a>
         <a href="#real-world">Real World</a>
         <a href="#citation">Citation</a>
+      </div>
+      <div class="nav-resources">
+        <a class="nav-paper" href="https://www.sciencedirect.com/science/article/abs/pii/S0952197626023602" target="_blank" rel="noreferrer">Paper ↗</a>
+        <a href="https://github.com/liuzh678/GAVEL-TD3" target="_blank" rel="noopener noreferrer">Code ↗</a>
+      </div>
       </div>
     </div>
   </nav>
 
   <header class="paper-hero" id="top">
-    <div class="route-motif route-motif-left" aria-hidden="true"><span></span><span></span><span></span></div>
-    <div class="route-motif route-motif-right" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="hero-inner">
       <p class="venue-label">Engineering Applications of Artificial Intelligence · Project Page</p>
       <h1><span>GAVEL-TD3:</span> Robust mapless navigation of mobile robots via fusion of graph attention networks and artificial potential field</h1>
@@ -52,6 +56,13 @@
       </p>
       <p class="affiliation-line"><sup>1</sup>Zhejiang Gongshang University · <sup>2</sup>Key Laboratory of Electronic Business and Logistics Information Technology of Zhejiang Province · <sup>3</sup>Luoteng Technology · <sup>4</sup>Zhejiang University</p>
       <p class="author-note"><sup>#</sup>Equal contribution · <sup>*</sup>Corresponding author</p>
+
+      <div class="publication-line" aria-label="Publication details">
+        <span>Volume 182</span>
+        <span>Article 116076</span>
+        <span>October 2026</span>
+        <a href="https://doi.org/10.1016/j.engappai.2026.116076" target="_blank" rel="noreferrer">DOI 10.1016/j.engappai.2026.116076</a>
+      </div>
 
       <div class="hero-actions" aria-label="Project resources">
         <a class="action-button primary" href="https://www.sciencedirect.com/science/article/abs/pii/S0952197626023602" target="_blank" rel="noreferrer">
@@ -68,62 +79,38 @@
         </a>
       </div>
 
-      <div class="publication-line" aria-label="Publication details">
-        <span>Volume 182</span>
-        <span>Article 116076</span>
-        <span>October 2026</span>
-        <a href="https://doi.org/10.1016/j.engappai.2026.116076" target="_blank" rel="noreferrer">DOI 10.1016/j.engappai.2026.116076</a>
-      </div>
     </div>
   </header>
 
   <main id="main-content">
-    <section class="section-band hero-video-band" id="video">
+    <section class="section-band hero-video-band" id="video" aria-label="Real-world navigation demonstration">
       <div class="shell">
-        <div class="section-heading centered video-section-heading">
-          <p class="section-label">Video</p>
-          <h2>Real-world navigation demonstration</h2>
-          <p>Deployment results across structured, unstructured, random-obstacle, and moving-pedestrian scenarios.</p>
-        </div>
         <article class="video-card hero-video-card">
-          <div class="video-heading">
-            <div>
-              <p class="section-label">Supplementary Video</p>
-              <h3>From simulation to physical navigation</h3>
-            </div>
-            <a href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
-          </div>
           <video controls preload="metadata" playsinline poster="assets/real-world-web.webp">
             <source src="assets/gavel-realworld-demo.mp4" type="video/mp4">
             Your browser does not support embedded video.
           </video>
-          <p>The learned policy is deployed on a mobile robot using only onboard observations and goal-relative state.</p>
+          <div class="video-heading">
+            <div>
+              <h2>Real-world navigation demonstration</h2>
+              <p>The learned policy is deployed on a mobile robot using only onboard observations and goal-relative state, across structured, unstructured, random-obstacle, and moving-pedestrian scenarios.</p>
+            </div>
+            <a href="https://youtu.be/ebswv-g3jtM" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+          </div>
         </article>
-      </div>
-    </section>
-
-    <section class="overview-section" id="method" aria-label="Framework overview">
-      <div class="shell">
-        <figure class="paper-figure overview-figure">
-          <a href="assets/framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution GAVEL-TD3 framework figure">
-            <img src="assets/framework-web.webp" width="2000" height="1398" alt="GAVEL-TD3 framework with graph attention, PCR state readout, APF guidance, replay buffer, critic, and policy." fetchpriority="high">
-          </a>
-          <figcaption><strong>Framework overview.</strong> GAVEL-TD3 couples graph-attention state representation with APF-guided value learning inside TD3.</figcaption>
-        </figure>
-
-        <figure class="paper-figure training-framework-figure" id="training-framework">
-          <a href="assets/training-framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution end-to-end GAVEL-TD3 training framework figure">
-            <img src="assets/training-framework-web.webp" width="1269" height="794" alt="End-to-end GAVEL-TD3 training framework with actor, twin critics, graph attention, replay buffer, and APF-consistency auxiliary critic." loading="lazy" decoding="async">
-          </a>
-          <figcaption><strong>End-to-end training framework.</strong> The actor and twin critics are optimized with replay-buffer samples, GAT gradients, and the APF-consistency auxiliary critic (Fig. 4 in the paper).</figcaption>
-        </figure>
+        <div class="metric-strip" aria-label="Key results">
+          <div class="metric-card"><span class="metric">0.88</span><span class="metric-label">BARN success rate</span></div>
+          <div class="metric-card"><span class="metric">+38 pp</span><span class="metric-label">over TD3 on BARN</span></div>
+          <div class="metric-card"><span class="metric">≈200k</span><span class="metric-label">interaction steps to converge</span></div>
+          <div class="metric-card"><span class="metric">16 / 20</span><span class="metric-label">successful real-world trials</span></div>
+        </div>
       </div>
     </section>
 
     <section class="section-band abstract-band" id="abstract">
       <div class="shell">
         <div class="abstract-layout">
-          <div class="section-heading">
+          <div class="section-heading centered">
             <p class="section-label">Abstract</p>
             <h2>Relational perception with guided exploration</h2>
             <p>GAVEL-TD3 addresses two practical limitations of end-to-end mapless navigation: incomplete local observations and inefficient early exploration.</p>
@@ -154,11 +141,35 @@
       </div>
     </section>
 
-    <section class="section-band results-band" id="results">
+    <section class="section-band overview-section" id="method" aria-label="Framework overview">
+      <div class="shell">
+        <div class="section-heading centered">
+          <p class="section-label">Method</p>
+          <h2>Graph-aware perception. Guided value learning.</h2>
+          <p>Graph attention captures obstacle relationships, while an APF-consistency auxiliary critic guides early policy learning within TD3.</p>
+        </div>
+        <figure class="paper-figure overview-figure">
+          <div class="figure-title"><span>01</span><h3>Framework overview</h3></div>
+          <a href="assets/framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution GAVEL-TD3 framework figure">
+            <img src="assets/framework-web.webp" width="2000" height="1398" alt="GAVEL-TD3 framework with graph attention, PCR state readout, APF guidance, replay buffer, critic, and policy." loading="lazy" decoding="async">
+          </a>
+          <figcaption><strong>Framework overview.</strong> GAVEL-TD3 couples graph-attention state representation with APF-guided value learning inside TD3.</figcaption>
+        </figure>
+        <figure class="paper-figure training-framework-figure" id="training-framework">
+          <div class="figure-title"><span>02</span><h3>End-to-end training</h3></div>
+          <a href="assets/training-framework.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution end-to-end GAVEL-TD3 training framework figure">
+            <img src="assets/training-framework-web.webp" width="1269" height="794" alt="End-to-end GAVEL-TD3 training framework with actor, twin critics, graph attention, replay buffer, and APF-consistency auxiliary critic." loading="lazy" decoding="async">
+          </a>
+          <figcaption><strong>End-to-end training framework.</strong> The actor and twin critics are optimized with replay-buffer samples, GAT gradients, and the APF-consistency auxiliary critic (Fig. 4 in the paper).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-band training-band" id="training">
       <div class="shell shell-wide">
         <div class="section-heading centered">
-          <p class="section-label">Training &amp; Zero-shot Evaluation</p>
-          <h2>Training dynamics and generalization</h2>
+          <p class="section-label">Training Dynamics</p>
+          <h2>Learning in static and dynamic environments</h2>
           <p>GAVEL-TD3 converges quickly in simulation and transfers directly to unseen BARN layouts, maintaining robust navigation in dense obstacle fields.</p>
         </div>
 
@@ -177,25 +188,15 @@
           </figure>
         </div>
 
-        <div class="results-subheading">
-          <p class="section-label">BARN Benchmark</p>
-          <h3>Decision efficiency and reliability on unseen maps</h3>
-          <p>Quantitative evaluation across 50 unseen BARN episodes reveals fewer planning steps and the lowest overall failure rate.</p>
-        </div>
+      </div>
+    </section>
 
-        <div class="metric-strip" aria-label="Key simulation results">
-          <div class="metric-card">
-            <span class="metric">0.88</span>
-            <span class="metric-label">BARN success rate</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric">+38 pp</span>
-            <span class="metric-label">over TD3 on BARN</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric">≈200k</span>
-            <span class="metric-label">interaction steps to converge</span>
-          </div>
+    <section class="section-band results-band" id="results">
+      <div class="shell shell-wide">
+        <div class="section-heading centered">
+          <p class="section-label">BARN Benchmark</p>
+          <h2>Decision efficiency on unseen maps</h2>
+          <p>Quantitative evaluation across 50 unseen BARN episodes reveals fewer planning steps and the lowest overall failure rate.</p>
         </div>
 
         <div class="results-grid">
@@ -213,18 +214,21 @@
           </figure>
         </div>
 
+        <details class="trajectory-details">
+          <summary><span><strong>Trajectory-level comparison</strong><span class="details-subtitle">Inspect the representative runs in a dense BARN scenario</span></span><span class="details-icon" aria-hidden="true">+</span></summary>
         <figure class="paper-figure trajectory-figure">
           <a class="trajectory-media" href="assets/trajectories.jpg" target="_blank" rel="noreferrer" aria-label="Open the full-resolution trajectory comparison figure">
             <img src="assets/trajectories-web.webp" width="1800" height="2790" alt="Six qualitative trajectory comparisons in a dense obstacle map, with collision cases annotated." loading="lazy">
           </a>
           <figcaption><strong>Trajectory-level comparison.</strong> Only GAVEL-TD3 completes the dense BARN scenario without collision in the representative runs.</figcaption>
         </figure>
+        </details>
       </div>
     </section>
 
     <section class="section-band real-world-band" id="real-world">
       <div class="shell shell-wide">
-        <div class="section-heading">
+        <div class="section-heading centered">
           <p class="section-label">Real-world Deployment</p>
           <h2>From simulation to physical navigation</h2>
           <p>The policy is deployed on a mobile robot with onboard 3D LiDAR. The outdoor experiments use no prior map and no environment-specific parameter tuning.</p>
@@ -347,7 +351,7 @@
           </div>
         </div>
         <div class="bibtex-block">
-          <button class="copy-button" type="button" data-copy="bibtex">Copy BibTeX</button>
+          <button class="copy-button" type="button" data-copy="bibtex" aria-live="polite">Copy BibTeX</button>
           <pre id="bibtex">@article{Liu2026GAVELTD3,
   title   = {GAVEL-TD3: Robust mapless navigation of mobile robots via fusion of graph attention networks and artificial potential field},
   author  = {Liu, Ziheng and Zhang, Zhixiong and Fu, Jun and Wang, You},
@@ -378,6 +382,27 @@
       const copyButton = document.querySelector('[data-copy]');
       const bibtex = document.getElementById('bibtex');
       const navLinks = [...document.querySelectorAll('.nav-links a')];
+      const navToggle = document.querySelector('.nav-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      const setMenuOpen = (open) => {
+        nav.classList.toggle('menu-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      };
+      navToggle.addEventListener('click', () => setMenuOpen(navToggle.getAttribute('aria-expanded') !== 'true'));
+      navMenu.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setMenuOpen(false);
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+          setMenuOpen(false);
+          navToggle.focus();
+        }
+      });
+      window.matchMedia('(min-width: 1001px)').addEventListener('change', (event) => {
+        if (event.matches) setMenuOpen(false);
+      });
 
       const updateNav = () => nav.classList.toggle('is-scrolled', window.scrollY > 16);
       updateNav();
@@ -394,8 +419,9 @@
         area.style.opacity = '0';
         document.body.appendChild(area);
         area.select();
-        document.execCommand('copy');
+        const copied = document.execCommand('copy');
         area.remove();
+        if (!copied) throw new Error('Clipboard unavailable');
       };
 
       copyButton.addEventListener('click', async () => {
